@@ -5,6 +5,7 @@
     "slim/http": "^0.4.0",
     "slim/psr7": "^1.6",
     "ext-pdo": "*",
-    "ext-sqlite3": "*"
+    "ext-sqlite3": "*",
+    "ext-json": "*"
   }
 }

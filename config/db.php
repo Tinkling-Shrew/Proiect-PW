@@ -6,11 +6,3 @@ class DB extends SQLite3 {
         parent::__construct($this->filename, $flags, $encryptionKey);
     }
 }
-
-$db = new DB();
-
-if(!$db) {
-    echo $db->lastErrorMsg();
-} else {
-    echo "Opened database successfully<br>";
-}

@@ -3,38 +3,34 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Factory\AppFactory;
 
+require "../config/db.php";
+
 require __DIR__ . '/../vendor/autoload.php';
-require __DIR__ . '/../config/db.php';
 
 // Instantiate app
 $app = AppFactory::create();
-$app->setBasePath("/myapp/public");
+$app->setBasePath("/myapp/public/index");
 
 $app->addRoutingMiddleware();
 $errorMiddleware = $app->addErrorMiddleware(true, true, true);
 
-// Add route callbacks
-$app->get('/', function (Request $request, Response $response, array $args) {
-    $db = new DB();
-
-    $result = $db->query("SELECT * FROM users;");
-
-    if($result) {
-        $result_string = "Rows:<br>";
-
-        while($row = $result->fetchArray(SQLITE3_ASSOC)) {
-            $result_string .= implode("_", $row) . "<br>";
-        }
-
-        $response->getBody()->write($result_string);
-    } else {
-        $response->getBOdy()->write("No data.");
-    }
-
-
+$app->get("/", function (Request $request, Response $response) {
+    $response->getBody()->write(__DIR__ . "\\..\\routes\\users.php");
     return $response;
 });
 
-// Run application
-$app->run();
+$app->get("/fml", function (Request $request, Response $response) {
+    $response->getBody()->write("fml");
+    return $response;
+});
 
+require("../routes/users.php");
+
+
+// Run application
+ try {
+     $app->run();
+ } catch (Exception $e) {
+     // We display an error message
+     die( json_encode(array("status" => "failed", "message" => "This action is not allowed")));
+ }
