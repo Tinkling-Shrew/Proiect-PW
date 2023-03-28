@@ -4,7 +4,9 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 if (!empty($app)) {
-    // ! Get all users
+    //
+    // ! GET ROUTE FOR ALL USERS
+    //
     $app->get("/users", function(Request $request, Response $response) {
         $sql = "SELECT * FROM main.users";
 
@@ -29,8 +31,10 @@ if (!empty($app)) {
         }
         return $response;
     });
-
-    // ! Get user by id params
+    //
+    // ! GET ONE USER ROUTE
+    // by id
+    //
     $app->get("/user", function(Request $request, Response $response, $args) use ($app) {
         $query = "SELECT * FROM main.users WHERE ID=:id";
 
@@ -50,6 +54,7 @@ if (!empty($app)) {
 
             while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
                 $users[] = $row;
+            }
 
 
             $db = null;
@@ -57,14 +62,15 @@ if (!empty($app)) {
             $response->getBody()->write(json_encode($users));
             $response->withStatus(200);
 
-            }
         } catch(PDOException $exception) {
             $response->getBody()->write(json_encode($exception));
         }
 
         return $response;
     });
-
+    //
+    // ! POST Route
+    //
     $app->post("/user", function (Request $request, Response $response) {
         $query = "INSERT INTO users (email, pass) VALUES (:email, :pass)";
 
@@ -104,7 +110,9 @@ if (!empty($app)) {
 
         return $response;
     });
-
+    //
+    // ! DELETE ROUTE
+    //
     $app->delete("/user", function (Request $request, Response $response) {
         $query = "DELETE FROM users WHERE id=:id";
 

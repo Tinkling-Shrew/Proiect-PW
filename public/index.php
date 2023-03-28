@@ -24,7 +24,10 @@ $app->get("/fml", function (Request $request, Response $response) {
     return $response;
 });
 
+// ! Routes
 require("../routes/users.php");
+require("../routes/graphs.php");
+require("../routes/algorithms.php");
 
 
 // Run application
