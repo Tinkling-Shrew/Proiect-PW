@@ -1,5 +1,16 @@
 from StepsTracker import StepsTracker
 
+import sys
+
+json_input = sys.argv[1]
+
+data = json.loads(json_input)
+
+start = data["start"]
+goal = data["goal"]
+search_space = data["search_space"]
+heuristics = data["heuristics"]
+
 def greedy_bfs_algorithm(start, goal, search_space, heuristics):
     available_paths = {}
     visited_nodes = {start: {'score': heuristics[start], 'parent': None}}

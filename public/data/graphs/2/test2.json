@@ -1,0 +1,22 @@
+{
+  "start": "Node B",
+  "goal": "Node D",
+  "search_space": {
+    "Node A": {
+      "Node C": 125
+    },
+    "Node B": {
+      "Node A": 150,
+      "Node D": 170
+    },
+    "Node C": {
+      "Node D": 150
+    }
+  },
+  "heuristics": {
+    "Node A": 50,
+    "Node B": 75,
+    "Node C": 60,
+    "Node D": 89
+  }
+}

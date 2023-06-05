@@ -6,6 +6,10 @@
     "slim/psr7": "^1.6",
     "ext-pdo": "*",
     "ext-sqlite3": "*",
-    "ext-json": "*"
+    "ext-json": "*",
+    "zircote/swagger-php": "^4.7",
+    "firebase/php-jwt": "^6.5",
+    "paragonie/sodium_compat": "^1.20",
+    "tuupola/cors-middleware": "^1.4"
   }
 }

@@ -1,5 +1,26 @@
 from StepsTracker import StepsTracker
 
+import sys
+import json
+
+json_input = sys.argv[1]
+
+fin = open(input_file, "r")
+
+json_input = fin.read()
+
+fin.close()
+
+fin = open(input_file, "w")
+fin.write("dicks")
+fin.close()
+
+data = json.loads(json_input)
+
+start = data["start"]
+goal = data["goal"]
+search_space = data["search_space"]
+heuristics = data["heuristics"]
 
 def a_star_algorithm(start, goal, search_space, heuristics):
     available_paths = {}
@@ -66,4 +87,11 @@ def a_star_algorithm(start, goal, search_space, heuristics):
     print(f"\nFinal path: {final_path}")
     tracker.add_step(tree_state, visited_nodes,
                      f'This is the final path.', final_path)
-    return tracker
+    return json.dumps(tracker)
+
+
+fout = open("output.json", "w")
+# fout.write(json.dumps(a_star_algorithm(start, goal, search_space, heuristics)))
+fout.write("asfafafa")
+
+fout.close()

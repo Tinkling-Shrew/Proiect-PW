@@ -1,0 +1,6 @@
+{
+  "start": "starting_node",
+  "goal": "ending_node",
+  "graph": [{ "nodeA": ["nodeB", "nodeC"] }, { "nodeB": ["nodeD", "nodeE"] }],
+  "heuristics": {}
+}

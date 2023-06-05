@@ -1,21 +1,33 @@
 from StepsTracker import StepsTracker
 from collections import OrderedDict
 
-def bfs_algorithm(start, goal, search_space):
+import sys
+
+json_input = sys.argv[1]
+
+data = json.loads(json_input)
+
+start = data["start"]
+goal = data["goal"]
+search_space = data["search_space"]
+
+
+
+def dfs_algorithm(start, goal, search_space):
     tree_state = [{'node': start, 'parent': None}]
     queue = OrderedDict()
     queue[start] = {'parent': None}
-    tracker = StepsTracker("Breadth First Search", "Queue")
+    tracker = StepsTracker("Depth First Search", "Stack")
 
     tracker.add_step(
-        tree_state, queue, f"We begin by placing the starting node ({start}) in the queue and in the tree.")
+        tree_state, queue, f"We begin by placing the starting node ({start}) in the stack and in the tree.")
 
     while queue:
         current_node = list(queue.keys())[0]
         parent = queue[current_node]["parent"]
         queue.pop(current_node)
         tracker.add_step(
-            tree_state, queue, f"We take the next node in the queue ({current_node}), mark it as the new current node and remove it from the queue.", [current_node])
+            tree_state, queue, f"We take the next node in the stack ({current_node}), mark it as the new current node and remove it from the stack.", [current_node])
 
         if current_node == goal:
             tracker.add_step(
@@ -28,8 +40,10 @@ def bfs_algorithm(start, goal, search_space):
                 children.append(child)
                 queue[child] = {'parent': current_node}
                 tree_state.append({'node': child, 'parent': current_node})
+        for child in reversed(children):
+            queue.move_to_end(child, last=False)
         tracker.add_step(
-            tree_state, queue, "Since the current node is not the goal node, we expand it and add its children to the queue.", children)
+            tree_state, queue, "Since the current node is not the goal node, we expand it and add its children to the stack.", children)
     else:
         tracker.add_step(
             tree_state, queue, f"The goal node ({goal}) was not found in the search space.")
