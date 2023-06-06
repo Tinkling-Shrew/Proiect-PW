@@ -1,3 +1,4 @@
+import json
 from copy import deepcopy
 
 class StepsTracker:
@@ -24,6 +25,14 @@ class StepsTracker:
 
     def __str__(self):
         return str({
+            "algorithm": self.alg_name,
+            "list_label": self.list_label,
+            "steps_count": len(self.steps),
+            "steps": self.steps
+        })
+
+    def get_json(self):
+        return json.dumps({
             "algorithm": self.alg_name,
             "list_label": self.list_label,
             "steps_count": len(self.steps),

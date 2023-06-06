@@ -1,8 +1,17 @@
-from StepsTracker import StepsTracker
-
+import json
+import os
 import sys
 
-json_input = sys.argv[1]
+from StepsTracker import StepsTracker
+from collections import OrderedDict
+
+base_path = os.path.dirname(__file__).__str__() + "\\"
+
+f = open(base_path + "input.json", "r")
+
+json_input = f.read()
+
+f.close()
 
 data = json.loads(json_input)
 
@@ -76,3 +85,9 @@ def greedy_bfs_algorithm(start, goal, search_space, heuristics):
     tracker.add_step(tree_state, visited_nodes,
                      f'This is the final path.', final_path)
     return tracker
+
+f = open(base_path + "output.json", "w")
+
+f.write(greedy_bfs_algorithm(start, goal, search_space, heuristics).get_json())
+
+f.close()

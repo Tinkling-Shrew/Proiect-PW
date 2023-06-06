@@ -1,13 +1,12 @@
 import json
+import os
 
 from StepsTracker import StepsTracker
 from collections import OrderedDict
 
-import sys
+base_path = os.path.dirname(__file__).__str__() + "\\"
 
-input_file = sys.argv[1]
-
-f = open(input_file, "r")
+f = open(base_path + "input.json", "r")
 
 json_input = f.read()
 
@@ -58,8 +57,9 @@ def bfs_algorithm(start, goal, search_space):
     return tracker
 
 
-f = open("output.json", "w")
-f.write(json.dump(bfs_algorithm(start, goal, search_space)))
+f = open(base_path + "output.json", "w")
+
+f.write(bfs_algorithm(start, goal, search_space).get_json())
 
 f.close()
 

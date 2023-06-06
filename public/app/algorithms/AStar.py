@@ -1,19 +1,16 @@
-from StepsTracker import StepsTracker
-
-import sys
 import json
+import os
 
-json_input = sys.argv[1]
+from StepsTracker import StepsTracker
+from collections import OrderedDict
 
-fin = open(input_file, "r")
+base_path = os.path.dirname(__file__).__str__() + "\\"
 
-json_input = fin.read()
+f = open(base_path + "input.json", "r")
 
-fin.close()
+json_input = f.read()
 
-fin = open(input_file, "w")
-fin.write("dicks")
-fin.close()
+f.close()
 
 data = json.loads(json_input)
 
@@ -90,8 +87,8 @@ def a_star_algorithm(start, goal, search_space, heuristics):
     return json.dumps(tracker)
 
 
-fout = open("output.json", "w")
-# fout.write(json.dumps(a_star_algorithm(start, goal, search_space, heuristics)))
-fout.write("asfafafa")
+f = open(base_path + "output.json", "w")
 
-fout.close()
+f.write(a_star_algorithm(start, goal, search_space, heuristics).get_json())
+
+f.close()

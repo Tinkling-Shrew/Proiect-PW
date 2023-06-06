@@ -1,9 +1,16 @@
+import json
+import os
+
 from StepsTracker import StepsTracker
 from collections import OrderedDict
 
-import sys
+base_path = os.path.dirname(__file__).__str__() + "\\"
 
-json_input = sys.argv[1]
+f = open(base_path + "input.json", "r")
+
+json_input = f.read()
+
+f.close()
 
 data = json.loads(json_input)
 
@@ -49,3 +56,9 @@ def dfs_algorithm(start, goal, search_space):
             tree_state, queue, f"The goal node ({goal}) was not found in the search space.")
 
     return tracker
+
+f = open(base_path + "output.json", "w")
+
+f.write(dfs_algorithm(start, goal, search_space).get_json())
+
+f.close()

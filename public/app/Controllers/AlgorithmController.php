@@ -14,9 +14,11 @@ class AlgorithmController {
     }
 
     public static function runAlgorithm($body, $name) {
-        file_put_contents("./app/algorithms/input.json", $body);
+        file_put_contents("./app/algorithms/input.json", json_encode($body));
 
-        exec("python ../algorithms/$name.py input.json");
+        $current_path = getcwd();
+
+        exec("python $current_path\\app\\algorithms\\$name.py", $output);
 
         return file_get_contents("./app/algorithms/output.json");
     }
@@ -24,7 +26,7 @@ class AlgorithmController {
     public static function runAStar(Request $request, Response $response): Response {
         $body = json_decode($request->getBody());
 
-//        $response->getBody()->write(json_encode($body));
+        $response->getBody()->write(json_encode($body));
 
         $output = self::runAlgorithm(json_encode($body), "AStar");
 
