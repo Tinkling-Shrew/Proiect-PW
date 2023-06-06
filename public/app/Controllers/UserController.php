@@ -29,16 +29,16 @@ class UserController {
     }
 
     public static function getUserById(Request $request, Response $response, array $args): Response {
-        $query = "SELECT * FROM users WHERE ID=:id";
+        $query = "SELECT * FROM users WHERE email=:email AND password=:password";
 
         try {
             $db = new db();
 
-            $users = $db->executeQuery($query, array(':id' => $args["id"]));;
+            $user = $db->executeQuery($query, array(':email' => $args["email"],':password' => $args["password"]));
 
             $db = null;
 
-            $response->getBody()->write(json_encode($users));
+            $response->getBody()->write(json_encode($user));
             $response->withStatus(200);
 
         } catch(PDOException $exception) {
@@ -49,7 +49,7 @@ class UserController {
     }
 
     public static function postUser(Request $request, Response $response): Response {
-        $query = "INSERT INTO users (email, pass) VALUES (:email, :pass)";
+        $query = "INSERT INTO users (email, password) VALUES (:email, :password)";
 
         try {
             $db = new db();
@@ -57,7 +57,7 @@ class UserController {
             $data = json_decode($request->getBody(), true);
 
             $email = $data["email"];
-            $pass = $data["pass"] ;
+            $password = $data["password"] ;
 
             $query_check = "SELECT * FROM users WHERE email=:email";
 
@@ -68,7 +68,7 @@ class UserController {
                 return $response->withStatus(409);
             }
 
-            $db->executeQuery($query, array(":email" => $email, ":pass" => $pass));
+            $db->executeQuery($query, array(":email" => $email, ":password" => password));
 
             $response->getBody()->write(json_encode("Object created successfully."));
 
