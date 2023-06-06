@@ -28,7 +28,7 @@ if (!empty($app)) {
     // ? requires user id of user, TBD
     // ? id could be give by query param or body
     // ? for now, it's given in the body
-    $app->post($baseRoute."/{userId}/", function (Request  $request, Response $response, array $args) {
+    $app->post($baseRoute."/{userId}", function (Request  $request, Response $response, array $args) {
         return GraphController::postGraph($request, $response, $args);
     });
 

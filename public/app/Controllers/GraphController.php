@@ -8,6 +8,16 @@ use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
+function generateRandomString($length = 10) {
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $charactersLength = strlen($characters);
+    $randomString = '';
+    for ($i = 0; $i < $length; $i++) {
+        $randomString .= $characters[random_int(0, $charactersLength - 1)];
+    }
+    return $randomString;
+}
+
 class GraphController {
     protected ContainerInterface $container;
 
@@ -50,14 +60,14 @@ class GraphController {
     }
 
     public static function postGraph(Request $request, Response $response, array $args): Response {
-        $query = "REPLACE INTO graphs (path, user_id) VALUES (:path, :user_id)";
+        $query = "REPLACE INTO graphs (path, user_id, name) VALUES (:path, :user_id, :name)";
 
         $body = json_decode($request->getBody(), true);
 
         $directoryPath = "./data/graphs/" . $body["user"];
 
         if(!file_exists($directoryPath)) {
-            mkdir("./graphs/" . $body["user"]);
+            mkdir("./data/graphs/" . $body["user"]);
         }
 
         $newFilePath = $directoryPath . "/" . $body["graph"]["name"] . ".json";
@@ -66,7 +76,7 @@ class GraphController {
 
         $db = new db();
 
-        $db->executeQuery($query, array(":path" => $newFilePath, ":userId" => $args["userId"]));
+        $db->executeQuery($query, array(":path" => $newFilePath, ":user_id" => $args["userId"], ":name" => $body["graph"]["name"]));
 
         $response->getBody()->write("Resources has been created successfully.");
 

@@ -1,0 +1,1 @@
+{"start":"A","goal":"B","search_space":{"A":{"B":100},"B":[]},"heuristics":{"A":100,"B":100}}

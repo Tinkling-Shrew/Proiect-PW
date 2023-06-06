@@ -28,15 +28,18 @@ class UserController {
         return $response;
     }
 
-    public static function getUserById(Request $request, Response $response, array $args): Response {
+    public static function getUser(Request $request, Response $response, array $args): Response {
         $query = "SELECT * FROM users WHERE email=:email AND password=:password";
+
+        $data = $request->getQueryParams();
+
+        $email = $data["email"];
+        $password = $data["password"];
 
         try {
             $db = new db();
 
-            $user = $db->executeQuery($query, array(':email' => $args["email"],':password' => $args["password"]));
-
-            $db = null;
+            $user = $db->executeQuery($query, array(':email' => $email,':password' => $password));
 
             $response->getBody()->write(json_encode($user));
             $response->withStatus(200);
@@ -57,7 +60,7 @@ class UserController {
             $data = json_decode($request->getBody(), true);
 
             $email = $data["email"];
-            $password = $data["password"] ;
+            $password = $data["password"];
 
             $query_check = "SELECT * FROM users WHERE email=:email";
 

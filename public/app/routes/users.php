@@ -13,12 +13,8 @@ if (!empty($app)) {
         return UserController::getAllUsers($request, $response);
     });
 
-    // ! GET USER BY ID ROUTE - /users/id
-    $app->get($base_path."/user/{id}", function(Request $request, Response $response, $args) use ($app) {
-        if(!$args["id"]) {
-            return $response->withStatus(401)->getBody()->write(json_encode("No user id."));
-        }
-        return UserController::getUserById($request, $response, $args);
+    $app->get($base_path."/login", function(Request $request, Response $response, $args) use ($app) {
+        return UserController::getUser($request, $response, $args);
     });
 
     // ! POST Route - /users/user
